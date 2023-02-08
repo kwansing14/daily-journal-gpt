@@ -9,10 +9,6 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export const config = {
-  runtime: 'edge',
-};
-
 export default createTRPCRouter({
   generateJournal: protectedProcedure
     .input(z.object({ text: z.string() }))
