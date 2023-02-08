@@ -24,7 +24,7 @@ const Home: NextPage = () => {
   const [input4, setInput4] = useState("");
   const [date, setDate] = useState("");
 
-  console.log('ss', session);
+  console.log("ss", session);
 
   const callGenerateJournal = api.chatGPT.generateJournal.useMutation({
     onMutate: () =>
@@ -35,10 +35,26 @@ const Home: NextPage = () => {
         id: "callGenerateJournal",
       }),
   });
-  const callTest1 = api.chatGPT.testApi.useMutation()
-  const callTest2 = api.chatGPT.testApi2.useMutation()
+  const callGenerateJournal2 = api.chatGPT.generateJournal2.useMutation({
+    onMutate: () =>
+      toast.loading("Generating...", { id: "callGenerateJournal2" }),
+    onSuccess: () => toast.success("Done!", { id: "callGenerateJournal2" }),
+    onError: (e) =>
+      toast.error(`Error: ${e.data?.code || ""}`, {
+        id: "callGenerateJournal2",
+      }),
+  });
+  const callGenerateJournal3 = api.chatGPT.generateJournal3.useMutation({
+    onMutate: () =>
+      toast.loading("Generating...", { id: "callGenerateJournal3" }),
+    onSuccess: () => toast.success("Done!", { id: "callGenerateJournal3" }),
+    onError: (e) =>
+      toast.error(`Error: ${e.data?.code || ""}`, {
+        id: "callGenerateJournal3",
+      }),
+  });
 
-  const handleGenerate = () => {
+  const handleGenerate = (options: number) => {
     const inputPrompt = `
       Task Assigned:
       ${input1}\n\n
@@ -48,11 +64,27 @@ const Home: NextPage = () => {
       ${input3}\n\n
       Any Issues Faced:
       ${input4}\n\n
-      Using the same header, elaborate and expand on the key points.
+      Using the same header, elaborate and expand on the key points. With a tone of frustration.
     `;
     // generate
-    if (input1 && input2 && input3 && input4) {
-      callGenerateJournal.mutate({ text: inputPrompt });
+    switch (options) {
+      case 1:
+        if (input1 && input2 && input3 && input4) {
+          callGenerateJournal.mutate({ text: inputPrompt });
+        }
+        break;
+      case 2:
+        if (input1 && input2 && input3 && input4) {
+          callGenerateJournal2.mutate({ text: inputPrompt });
+        }
+        break;
+      case 3:
+        if (input1 && input2 && input3 && input4) {
+          callGenerateJournal3.mutate({ text: inputPrompt });
+        }
+        break;
+      default:
+        break;
     }
   };
 
@@ -150,22 +182,24 @@ const Home: NextPage = () => {
           <div className="mt-8 flex items-center gap-4">
             <button
               className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
-              onClick={handleGenerate}
+              onClick={() => handleGenerate(1)}
               disabled={callGenerateJournal.isLoading}
             >
-              Generate
+              Davinci
             </button>
             <button
               className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
-              onClick={() => callTest1.mutate()}
+              onClick={() => handleGenerate(2)}
+              disabled={callGenerateJournal.isLoading}
             >
-              test1
+              Curie
             </button>
             <button
               className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
-              onClick={() => callTest2.mutate()}
+              onClick={() => handleGenerate(3)}
+              disabled={callGenerateJournal.isLoading}
             >
-              test2
+              Ada
             </button>
             {callGenerateJournal?.data && (
               <button

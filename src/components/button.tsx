@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface ButtonProps {
   pic?: string;
   text?: string;
@@ -21,7 +23,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
         onClick={onClick}
       >
         {pic && (
-          <img className="w-8" src={pic} referrerPolicy={"no-referrer"} />
+          <img className="w-8" src={pic} referrerPolicy={"no-referrer"} alt='profile_pic'/>
         )}
         {text && <div className="whitespace-nowrap text-white">{text}</div>}
         {children && <div className="">{children}</div>}

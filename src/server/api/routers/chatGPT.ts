@@ -28,10 +28,38 @@ export default createTRPCRouter({
       }
       return "no response";
     }),
-  testApi: protectedProcedure.mutation(() => {
-    return "test";
-  }),
-  testApi2: publicProcedure.mutation(() => {
-    return "test";
-  }),
+  generateJournal2: protectedProcedure
+    .input(z.object({ text: z.string() }))
+    .mutation(async ({ input }) => {
+      const res = await openai.createCompletion({
+        model: "text-curie-001",
+        prompt: input.text,
+        temperature: 0.7,
+        max_tokens: 256,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      });
+      if (res.data.choices.length > 0) {
+        return res.data.choices[0]?.text;
+      }
+      return "no response";
+    }),
+  generateJournal3: protectedProcedure
+    .input(z.object({ text: z.string() }))
+    .mutation(async ({ input }) => {
+      const res = await openai.createCompletion({
+        model: "text-ada-001",
+        prompt: input.text,
+        temperature: 0.7,
+        max_tokens: 256,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      });
+      if (res.data.choices.length > 0) {
+        return res.data.choices[0]?.text;
+      }
+      return "no response";
+    }),
 });
