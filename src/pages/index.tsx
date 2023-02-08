@@ -23,8 +23,7 @@ const Home: NextPage = () => {
   const [input3, setInput3] = useState("");
   const [input4, setInput4] = useState("");
   const [date, setDate] = useState("");
-
-  console.log("ss", session);
+  const [dataOption, setDataOption] = useState(0);
 
   const callGenerateJournal = api.chatGPT.generateJournal.useMutation({
     onMutate: () =>
@@ -54,7 +53,8 @@ const Home: NextPage = () => {
       }),
   });
 
-  const handleGenerate = (options: number) => {
+  const handleGenerate = (selectedOption: number) => {
+    setDataOption(selectedOption);
     const inputPrompt = `
       Task Assigned:
       ${input1}\n\n
@@ -66,8 +66,7 @@ const Home: NextPage = () => {
       ${input4}\n\n
       Using the same header, elaborate and expand on the key points. With a tone of frustration.
     `;
-    // generate
-    switch (options) {
+    switch (selectedOption) {
       case 1:
         if (input1 && input2 && input3 && input4) {
           callGenerateJournal.mutate({ text: inputPrompt });
@@ -131,12 +130,25 @@ const Home: NextPage = () => {
   }, []);
 
   const journalData = useMemo(() => {
-    if (callGenerateJournal.data) {
+    if (callGenerateJournal.data && dataOption === 1) {
       return `Date: ${new Date().toLocaleDateString()}  
       ${callGenerateJournal.data}`;
     }
+    if (callGenerateJournal2.data && dataOption === 2) {
+      return `Date: ${new Date().toLocaleDateString()}
+      ${callGenerateJournal2.data}`;
+    }
+    if (callGenerateJournal3.data && dataOption === 3) {
+      return `Date: ${new Date().toLocaleDateString()}
+      ${callGenerateJournal3.data}`;
+    }
     return "";
-  }, [callGenerateJournal.data]);
+  }, [
+    dataOption,
+    callGenerateJournal.data,
+    callGenerateJournal2.data,
+    callGenerateJournal3.data,
+  ]);
 
   return (
     <>
@@ -179,7 +191,8 @@ const Home: NextPage = () => {
             className="h-18 w-full  rounded-sm py-2 px-2 outline-none"
             onChange={(e) => setInput4(e.target.value)}
           />
-          <div className="mt-8 flex items-center gap-4">
+          <div className="mt-8 text-white">Select a Ai-model:</div>
+          <div className="flex items-center gap-4">
             <button
               className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
               onClick={() => handleGenerate(1)}
@@ -213,7 +226,7 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="container mt-4 py-4">
-          {callGenerateJournal?.data && (
+          {journalData && (
             <div className="whitespace-pre-line text-white">{journalData}</div>
           )}
         </div>
