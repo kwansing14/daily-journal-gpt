@@ -25,12 +25,15 @@ const Home: NextPage = () => {
   const [date, setDate] = useState("");
 
   const callGenerateJournal = api.chatGPT.generateJournal.useMutation({
-    onMutate: () => toast.loading("Generating...", { id: "callGenerateJournal" }),
+    onMutate: () =>
+      toast.loading("Generating...", { id: "callGenerateJournal" }),
     onSuccess: () => toast.success("Done!", { id: "callGenerateJournal" }),
-    onError: (e) => toast.error(`Error: ${e.data?.code || ''}`, { id: "callGenerateJournal" }),
+    onError: (e) =>
+      toast.error(`Error: ${e.data?.code || ""}`, {
+        id: "callGenerateJournal",
+      }),
   });
 
-  
   const handleGenerate = () => {
     const inputPrompt = `
       Task Assigned:
@@ -49,11 +52,14 @@ const Home: NextPage = () => {
     }
   };
 
-  const copyToClipBoard = () => {
+  const copyToClipBoard = async () => {
     if (callGenerateJournal.data) {
-      const res = navigator.clipboard.writeText(journalData);
-      console.log("copy to clipboard: ", res);
-      toast.success("Copied to clipboard");
+      try {
+        await navigator.clipboard.writeText(journalData);
+        toast.success("Copied to clipboard");
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -85,7 +91,7 @@ const Home: NextPage = () => {
     if (journalData.input2) setInput2(journalData.input2);
     if (journalData.input3) setInput3(journalData.input3);
     if (journalData.input4) setInput4(journalData.input4);
-    setDate(new Date().toLocaleDateString())
+    setDate(new Date().toLocaleDateString());
   }, []);
 
   const journalData = useMemo(() => {
@@ -96,9 +102,6 @@ const Home: NextPage = () => {
     return "";
   }, [callGenerateJournal.data]);
 
-  console.log("session: ", session);
-  console.log('cgj---',callGenerateJournal);
-
   return (
     <>
       <Head>
@@ -108,9 +111,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex	min-h-screen flex-col items-center bg-black py-8">
         <div className="container flex w-full justify-between">
-          <div className="text-white">
-            {date}
-          </div>
+          <div className="text-white">{date}</div>
           <LoginButton />
         </div>
         <div className="container flex flex-col justify-center gap-2 ">
@@ -161,7 +162,7 @@ const Home: NextPage = () => {
             )}
           </div>
         </div>
-        <div className="container py-4 mt-4">
+        <div className="container mt-4 py-4">
           {callGenerateJournal?.data && (
             <div className="whitespace-pre-line text-white">{journalData}</div>
           )}
