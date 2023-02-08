@@ -7,8 +7,11 @@ import { env } from "@/src/env/server.mjs";
 const configuration = new Configuration({
   apiKey: env.OPENAI_API_KEY,
 });
-
 const openai = new OpenAIApi(configuration);
+
+export const config = {
+  runtime: 'edge',
+};
 
 export default createTRPCRouter({
   generateJournal: protectedProcedure
