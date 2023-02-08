@@ -1,4 +1,3 @@
-import Image from 'next/image';
 
 interface ButtonProps {
   pic?: string;
@@ -23,6 +22,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
         onClick={onClick}
       >
         {pic && (
+          // eslint-disable-next-line @next/next/no-img-element
           <img className="w-8" src={pic} referrerPolicy={"no-referrer"} alt='profile_pic'/>
         )}
         {text && <div className="whitespace-nowrap text-white">{text}</div>}

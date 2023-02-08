@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import { useEffect, useState, useMemo } from "react";
 import Head from "next/head";
 // import Link from "next/link";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { api } from "../utils/api";
 import { toast } from "react-hot-toast";
 import LoginButton from "@/src/components/loginButton";
@@ -17,7 +17,7 @@ interface JournalData {
 }
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [input3, setInput3] = useState("");
