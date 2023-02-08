@@ -33,7 +33,9 @@ const Home: NextPage = () => {
         id: "callGenerateJournal",
       }),
   });
-
+  const callTest1 = api.chatGPT.testApi.useMutation()
+  const callTest2 = api.chatGPT.testApi2.useMutation()
+  
   const handleGenerate = () => {
     const inputPrompt = `
       Task Assigned:
@@ -150,6 +152,18 @@ const Home: NextPage = () => {
               disabled={callGenerateJournal.isLoading}
             >
               Generate
+            </button>
+            <button
+              className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
+              onClick={() => callTest1.mutate()}
+            >
+              test1
+            </button>
+            <button
+              className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
+              onClick={() => callTest2.mutate()}
+            >
+              test2
             </button>
             {callGenerateJournal?.data && (
               <button

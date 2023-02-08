@@ -28,4 +28,10 @@ export default createTRPCRouter({
       }
       return "no response";
     }),
+  testApi: protectedProcedure.mutation(() => {
+    return "test";
+  }),
+  testApi2: publicProcedure.mutation(() => {
+    return "test";
+  }),
 });
