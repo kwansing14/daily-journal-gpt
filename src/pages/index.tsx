@@ -24,6 +24,8 @@ const Home: NextPage = () => {
   const [input4, setInput4] = useState("");
   const [date, setDate] = useState("");
 
+  console.log('ss', session);
+
   const callGenerateJournal = api.chatGPT.generateJournal.useMutation({
     onMutate: () =>
       toast.loading("Generating...", { id: "callGenerateJournal" }),
@@ -35,7 +37,7 @@ const Home: NextPage = () => {
   });
   const callTest1 = api.chatGPT.testApi.useMutation()
   const callTest2 = api.chatGPT.testApi2.useMutation()
-  
+
   const handleGenerate = () => {
     const inputPrompt = `
       Task Assigned:
