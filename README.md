@@ -18,5 +18,3 @@ GoogleAuth
 Trpc
 Prisma
 CockroachDB
-
-
