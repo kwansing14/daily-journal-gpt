@@ -1,8 +1,6 @@
 import { type NextPage } from "next";
 import { useEffect, useState, useMemo } from "react";
 import Head from "next/head";
-// import Link from "next/link";
-// import { useSession } from "next-auth/react";
 import { api } from "../utils/api";
 import { toast } from "react-hot-toast";
 import LoginButton from "@/src/components/loginButton";
@@ -17,7 +15,6 @@ interface JournalData {
 }
 
 const Home: NextPage = () => {
-  // const { data: session } = useSession();
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [input3, setInput3] = useState("");
@@ -150,6 +147,13 @@ const Home: NextPage = () => {
     callGenerateJournal3.data,
   ]);
 
+  const isLoading = useMemo(() => {
+    if (callGenerateJournal.isLoading || callGenerateJournal2.isLoading || callGenerateJournal3.isLoading) {
+      return true;
+    }
+    return false;
+  },[callGenerateJournal.isLoading, callGenerateJournal2.isLoading, callGenerateJournal3.isLoading]);
+
   return (
     <>
       <Head>
@@ -158,6 +162,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex	min-h-screen flex-col items-center bg-black py-8">
+        <h2 className="text-2xl text-white">For Alephian by Alephian</h2>
         <div className="container flex w-full justify-between">
           <div className="text-white">{date}</div>
           <LoginButton />
@@ -196,21 +201,21 @@ const Home: NextPage = () => {
             <button
               className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
               onClick={() => handleGenerate(1)}
-              disabled={callGenerateJournal.isLoading}
+              disabled={isLoading}
             >
               Davinci
             </button>
             <button
               className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
               onClick={() => handleGenerate(2)}
-              disabled={callGenerateJournal.isLoading}
+              disabled={isLoading}
             >
               Curie
             </button>
             <button
               className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
               onClick={() => handleGenerate(3)}
-              disabled={callGenerateJournal.isLoading}
+              disabled={isLoading}
             >
               Ada
             </button>
@@ -218,7 +223,7 @@ const Home: NextPage = () => {
               <button
                 className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4"
                 onClick={copyToClipBoard}
-                disabled={callGenerateJournal.isLoading}
+                disabled={isLoading}
               >
                 Copy to clipboard
               </button>
