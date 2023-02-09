@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import { useEffect, useState, useMemo } from "react";
 import Head from "next/head";
-import { api } from "../utils/api";
+import { api } from "@/src/utils/api";
 import { toast } from "react-hot-toast";
 import LoginButton from "@/src/components/loginButton";
 
@@ -128,16 +128,19 @@ const Home: NextPage = () => {
 
   const journalData = useMemo(() => {
     if (callGenerateJournal.data && dataOption === 1) {
-      return `Date: ${new Date().toLocaleDateString()}  
-      ${callGenerateJournal.data}`;
+      return `Date: ${new Date().toLocaleDateString()}${
+        callGenerateJournal.data
+      }`;
     }
     if (callGenerateJournal2.data && dataOption === 2) {
-      return `Date: ${new Date().toLocaleDateString()}
-      ${callGenerateJournal2.data}`;
+      return `Date: ${new Date().toLocaleDateString()}${
+        callGenerateJournal2.data
+      }`;
     }
     if (callGenerateJournal3.data && dataOption === 3) {
-      return `Date: ${new Date().toLocaleDateString()}
-      ${callGenerateJournal3.data}`;
+      return `Date: ${new Date().toLocaleDateString()}${
+        callGenerateJournal3.data
+      }`;
     }
     return "";
   }, [
@@ -148,11 +151,19 @@ const Home: NextPage = () => {
   ]);
 
   const isLoading = useMemo(() => {
-    if (callGenerateJournal.isLoading || callGenerateJournal2.isLoading || callGenerateJournal3.isLoading) {
+    if (
+      callGenerateJournal.isLoading ||
+      callGenerateJournal2.isLoading ||
+      callGenerateJournal3.isLoading
+    ) {
       return true;
     }
     return false;
-  },[callGenerateJournal.isLoading, callGenerateJournal2.isLoading, callGenerateJournal3.isLoading]);
+  }, [
+    callGenerateJournal.isLoading,
+    callGenerateJournal2.isLoading,
+    callGenerateJournal3.isLoading,
+  ]);
 
   return (
     <>
@@ -162,7 +173,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex	min-h-screen flex-col items-center bg-black py-8">
-        <h2 className="text-2xl text-white">For Alephian by Alephian</h2>
+        <h2 className="text-2xl text-white">For Alephians by Alephians</h2>
         <div className="container flex w-full justify-between">
           <div className="text-white">{date}</div>
           <LoginButton />
