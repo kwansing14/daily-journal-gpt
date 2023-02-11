@@ -4,6 +4,7 @@ import Head from "next/head";
 import { api } from "@/src/utils/api";
 import { toast } from "react-hot-toast";
 import LoginButton from "@/src/components/loginButton";
+import { useSession } from "next-auth/react";
 
 interface JournalData {
   journalData: {
@@ -21,6 +22,7 @@ const Home: NextPage = () => {
   const [input4, setInput4] = useState("");
   const [date, setDate] = useState("");
   const [dataOption, setDataOption] = useState(0);
+  const { data: session } = useSession();
 
   const callGenerateJournal = api.chatGPT.generateJournal.useMutation({
     onMutate: () =>
@@ -151,6 +153,7 @@ const Home: NextPage = () => {
   ]);
 
   const isLoading = useMemo(() => {
+    if (!session) return true;
     if (
       callGenerateJournal.isLoading ||
       callGenerateJournal2.isLoading ||
@@ -163,6 +166,7 @@ const Home: NextPage = () => {
     callGenerateJournal.isLoading,
     callGenerateJournal2.isLoading,
     callGenerateJournal3.isLoading,
+    session
   ]);
 
   return (
@@ -240,6 +244,9 @@ const Home: NextPage = () => {
               </button>
             )}
           </div>
+        </div>
+        <div className='container mt-4 text-white'>
+          Logged in with your aleph email to start.
         </div>
         <div className="container mt-4 py-4">
           {journalData && (
