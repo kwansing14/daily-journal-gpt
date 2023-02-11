@@ -13,11 +13,19 @@ PRS are welcome.
 git clone and run npm install / pnpm install / yarn install
 
 Tech Stacks
+
 TypeScript
+
 NextJS
+
 TailwindCSS
+
 NextAuth
+
 GoogleAuth
+
 Trpc
+
 Prisma
+
 CockroachDB
