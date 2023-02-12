@@ -174,6 +174,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Daily Journal Generator</title>
         <meta name="description" content="Daily Journal Generator, by Alephians for Alephians" />
+        <meta name="google-site-verification" content="heFZilYyvGdbQGp7zKFuw6WKHhLQwez2Rr5bhwoi8t4" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex	min-h-screen flex-col items-center bg-black py-8 px-3">
