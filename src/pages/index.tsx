@@ -245,9 +245,9 @@ const Home: NextPage = () => {
             )}
           </div>
         </div>
-        <div className='container mt-4 text-white'>
+        {!session && <div className='container mt-4 text-white'>
           Logged in with your aleph email to start.
-        </div>
+        </div>}
         <div className="container mt-4 py-4">
           {journalData && (
             <div className="whitespace-pre-line text-white">{journalData}</div>
