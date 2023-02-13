@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import LoginButton from "@/src/components/loginButton";
 import { useSession } from "next-auth/react";
 
+
 interface JournalData {
   journalData: {
     input1: string;
