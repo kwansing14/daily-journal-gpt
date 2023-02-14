@@ -1,5 +1,5 @@
 import { useSession, signIn, signOut } from "next-auth/react";
-import ButtonComponent from "@/src/components/Button";
+import ButtonComponent from "@/src/components/ButtonComponent";
 
 const SignInOutButton = () => {
   const { data: session } = useSession();
