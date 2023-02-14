@@ -4,7 +4,7 @@ import Head from "next/head";
 import { api } from "@/src/utils/api";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
-import LoginButton from "@/src/components/LoginButton";
+import LoginButton from "@/src/components/LoginButtonComponent";
 // import RadioGroup from "@/src/components/RadioGroup";
 import TextArea from "@/src/components/TextArea";
 import AiModel from "@/src/components/AiModel";
