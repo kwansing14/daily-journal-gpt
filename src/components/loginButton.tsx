@@ -1,5 +1,5 @@
 import { useSession, signIn, signOut } from "next-auth/react";
-import Button from "@/src/components/Button";
+import ButtonComponent from "@/src/components/Button";
 
 const SignInOutButton = () => {
   const { data: session } = useSession();
@@ -9,9 +9,9 @@ const SignInOutButton = () => {
   return (
     <>
       {session?.user?.image ? (
-        <Button pic={session.user.image} onClick={() => signOut()} />
+        <ButtonComponent pic={session.user.image} onClick={() => signOut()} />
       ) : (
-        <Button
+        <ButtonComponent
           pic={googleIcon}
           text={"Sign in with Google"}
           onClick={() => signIn("google")}
