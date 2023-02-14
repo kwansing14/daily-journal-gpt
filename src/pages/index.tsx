@@ -6,7 +6,6 @@ import { toast } from "react-hot-toast";
 import LoginButton from "@/src/components/loginButton";
 import { useSession } from "next-auth/react";
 
-
 interface JournalData {
   journalData: {
     input1: string;
@@ -64,7 +63,7 @@ const Home: NextPage = () => {
       ${input3}\n\n
       Any Issues Faced:
       ${input4}\n\n
-      Using the same header, elaborate and expand on the key points. With a tone of frustration.
+      Using the same header, elaborate and expand on the key points.
     `;
     switch (selectedOption) {
       case 1:
@@ -167,15 +166,21 @@ const Home: NextPage = () => {
     callGenerateJournal.isLoading,
     callGenerateJournal2.isLoading,
     callGenerateJournal3.isLoading,
-    session
+    session,
   ]);
 
   return (
     <>
       <Head>
         <title>Daily Journal Generator</title>
-        <meta name="description" content="Daily Journal Generator, by Alephians for Alephians" />
-        <meta name="google-site-verification" content="heFZilYyvGdbQGp7zKFuw6WKHhLQwez2Rr5bhwoi8t4" />
+        <meta
+          name="description"
+          content="Daily Journal Generator, by Alephians for Alephians"
+        />
+        <meta
+          name="google-site-verification"
+          content="heFZilYyvGdbQGp7zKFuw6WKHhLQwez2Rr5bhwoi8t4"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex	min-h-screen flex-col items-center bg-black py-8 px-3">
@@ -247,9 +252,11 @@ const Home: NextPage = () => {
             )}
           </div>
         </div>
-        {!session && <div className='container mt-4 text-white'>
-          Logged in with your aleph email to start.
-        </div>}
+        {!session && (
+          <div className="container mt-4 text-white">
+            Logged in with your aleph email to start.
+          </div>
+        )}
         <div className="container mt-4 py-4">
           {journalData && (
             <div className="whitespace-pre-line text-white">{journalData}</div>
