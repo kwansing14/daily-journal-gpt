@@ -65,7 +65,7 @@ const Home: NextPage = () => {
       ${input3}\n\n
       Any Issues Faced:
       ${input4}\n\n
-      Using the same header, elaborate and expand on the key points.
+      Using the same header, elaborate and expand on the key points.  
     `;
     switch (selectedOption) {
       case 1:
@@ -205,7 +205,7 @@ const Home: NextPage = () => {
             input={input4}
             setInput={setInput4}
           />
-          <RadioGroup />
+          {/* <RadioGroup /> */}
           <AiModel
             header={"Select a Ai-model:"}
             journalData={journalData}
