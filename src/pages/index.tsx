@@ -108,7 +108,7 @@ const Home: NextPage = () => {
     };
     return setTimeout(() => {
       localStorage.setItem("journalData", JSON.stringify(obj));
-    }, 3000);
+    }, 1000);
   };
 
   useEffect(() => {
