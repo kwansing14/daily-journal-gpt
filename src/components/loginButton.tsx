@@ -1,23 +1,20 @@
-import { useSession, signIn, signOut } from 'next-auth/react';
-import Button from './button';
+import { useSession, signIn, signOut } from "next-auth/react";
+import Button from "./Button";
 
 const SignInOutButton = () => {
   const { data: session } = useSession();
   const googleIcon =
-    'https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg';
+    "https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg";
 
   return (
     <>
       {session?.user?.image ? (
-        <Button
-          pic={session.user.image}
-          onClick={() => signOut()}
-        />
+        <Button pic={session.user.image} onClick={() => signOut()} />
       ) : (
         <Button
           pic={googleIcon}
-          text={'Sign in with Google'}
-          onClick={() => signIn('google')}
+          text={"Sign in with Google"}
+          onClick={() => signIn("google")}
         />
       )}
     </>

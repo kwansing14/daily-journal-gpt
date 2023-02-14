@@ -3,9 +3,11 @@ import { useEffect, useState, useMemo } from "react";
 import Head from "next/head";
 import { api } from "@/src/utils/api";
 import { toast } from "react-hot-toast";
-import LoginButton from "@/src/components/loginButton";
 import { useSession } from "next-auth/react";
-
+import LoginButton from "@/src/components/LoginButton";
+import RadioGroup from "@/src/components/RadioGroup";
+import TextArea from "@/src/components/TextArea";
+import AiModel from "@/src/components/AiModel";
 interface JournalData {
   journalData: {
     input1: string;
@@ -86,17 +88,6 @@ const Home: NextPage = () => {
     }
   };
 
-  const copyToClipBoard = async () => {
-    if (callGenerateJournal.data) {
-      try {
-        await navigator.clipboard.writeText(journalData);
-        toast.success("Copied to clipboard");
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  };
-
   const handleDebounce = () => {
     const obj = {
       journalData: {
@@ -140,7 +131,7 @@ const Home: NextPage = () => {
       }`;
     }
     if (callGenerateJournal3.data && dataOption === 3) {
-      return `Date: ${new Date().toLocaleDateString()}${
+      return `Date: ${new Date().toLocaleDateString()}\n${
         callGenerateJournal3.data
       }`;
     }
@@ -190,78 +181,48 @@ const Home: NextPage = () => {
           <LoginButton />
         </div>
         <div className="container flex flex-col justify-center gap-2 ">
-          <div className="mt-4 text-white">Task Assigned:</div>
-          <textarea
-            value={input1}
+          <TextArea
+            header={"Task Assigned:"}
             placeholder={`1. API integration for project ABC\n2. Fix ui for XYZ`}
-            className="h18 w-full rounded-sm py-2 px-2 outline-none"
-            onChange={(e) => setInput1(e.target.value)}
+            input={input1}
+            setInput={setInput1}
           />
-          <div className="mt-4 text-white">Task Completed:</div>
-          <textarea
-            value={input2}
-            placeholder="1. API integrated for project EFG"
-            className="h-18 w-full  rounded-sm py-2 px-2 outline-none"
-            onChange={(e) => setInput2(e.target.value)}
+          <TextArea
+            header={"Task Completed:"}
+            placeholder={"1. API integrated for project EFG"}
+            input={input2}
+            setInput={setInput2}
           />
-          <div className="mt-4 text-white">Plan For Next Day:</div>
-          <textarea
-            value={input3}
-            placeholder="1. Unit test for project EFG"
-            className="h-18 w-full  rounded-sm py-2 px-2 outline-none"
-            onChange={(e) => setInput3(e.target.value)}
+          <TextArea
+            header={"Plan For Next Day:"}
+            placeholder={"1. Unit test for project EFG"}
+            input={input3}
+            setInput={setInput3}
           />
-          <div className="mt-4 text-white">Any Issues Faced:</div>
-          <textarea
-            value={input4}
-            placeholder="1. Services backend failed."
-            className="h-18 w-full  rounded-sm py-2 px-2 outline-none"
-            onChange={(e) => setInput4(e.target.value)}
+          <TextArea
+            header={"Any Issues Faced:"}
+            placeholder={"1. Services backend failed."}
+            input={input4}
+            setInput={setInput4}
           />
-          <div className="mt-8 text-white">Select a Ai-model:</div>
-          <div className="flex items-center gap-4">
-            <button
-              className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
-              onClick={() => handleGenerate(1)}
-              disabled={isLoading}
-            >
-              Davinci
-            </button>
-            <button
-              className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
-              onClick={() => handleGenerate(2)}
-              disabled={isLoading}
-            >
-              Curie
-            </button>
-            <button
-              className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
-              onClick={() => handleGenerate(3)}
-              disabled={isLoading}
-            >
-              Ada
-            </button>
-            {callGenerateJournal?.data && (
-              <button
-                className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4"
-                onClick={copyToClipBoard}
-                disabled={isLoading}
-              >
-                Copy to clipboard
-              </button>
-            )}
-          </div>
+          <RadioGroup />
+          <AiModel
+            header={"Select a Ai-model:"}
+            journalData={journalData}
+            handleGenerate={handleGenerate}
+            isLoading={isLoading}
+          />
         </div>
         {!session && (
           <div className="container mt-4 text-white">
             Logged in with your aleph email to start.
           </div>
         )}
-        <div className="container mt-4 py-4">
-          {journalData && (
+        {journalData && (
+          <div className="container mt-4 py-4">
             <div className="whitespace-pre-line text-white">{journalData}</div>
-          )}
-        </div>
+          </div>
+        )}
       </main>
     </>
   );
