@@ -5,7 +5,7 @@ import { api } from "@/src/utils/api";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import LoginButton from "@/src/components/LoginButtonComponent";
-// import RadioGroup from "@/src/components/RadioGroup";
+import RadioGroup from "@/src/components/RadioGroup";
 import TextArea from "@/src/components/TextArea";
 import AiModel from "@/src/components/AiModel";
 interface JournalData {
@@ -14,6 +14,7 @@ interface JournalData {
     input2: string;
     input3: string;
     input4: string;
+    input5: string;
   };
 }
 
@@ -22,9 +23,12 @@ const Home: NextPage = () => {
   const [input2, setInput2] = useState("");
   const [input3, setInput3] = useState("");
   const [input4, setInput4] = useState("");
+  const [input5, setInput5] = useState("");
+  const [mood, setMood] = useState("");
   const [date, setDate] = useState("");
   const [dataOption, setDataOption] = useState(0);
   const { data: session } = useSession();
+  let moodInput: string;
 
   const callGenerateJournal = api.chatGPT.generateJournal.useMutation({
     onMutate: () =>
@@ -56,6 +60,9 @@ const Home: NextPage = () => {
 
   const handleGenerate = (selectedOption: number) => {
     setDataOption(selectedOption);
+    console.log('mood', mood)
+    if (mood === "high") moodInput = "with a tone of excitement";
+    if (mood === "low") moodInput = "with a tone of frustration";
     const inputPrompt = `
       Task Assigned:
       ${input1}\n\n
@@ -65,21 +72,23 @@ const Home: NextPage = () => {
       ${input3}\n\n
       Any Issues Faced:
       ${input4}\n\n
-      Using the same header, elaborate and expand on the key points.  
+      Gratitude:
+      ${input5}\n\n
+      Using the same header, elaborate and expand on the key points ${moodInput}.
     `;
     switch (selectedOption) {
       case 1:
-        if (input1 && input2 && input3 && input4) {
+        if (input1 && input2 && input3 && input4 && input5) {
           callGenerateJournal.mutate({ text: inputPrompt });
         }
         break;
       case 2:
-        if (input1 && input2 && input3 && input4) {
+        if (input1 && input2 && input3 && input4 && input5) {
           callGenerateJournal2.mutate({ text: inputPrompt });
         }
         break;
       case 3:
-        if (input1 && input2 && input3 && input4) {
+        if (input1 && input2 && input3 && input4 && input5) {
           callGenerateJournal3.mutate({ text: inputPrompt });
         }
         break;
@@ -95,6 +104,7 @@ const Home: NextPage = () => {
         input2: input2,
         input3: input3,
         input4: input4,
+        input5: input5,
       },
     };
     return setTimeout(() => {
@@ -106,7 +116,7 @@ const Home: NextPage = () => {
     const delayDebounceFn = handleDebounce();
     return () => clearTimeout(delayDebounceFn);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [input1, input2, input3, input4]);
+  }, [input1, input2, input3, input4, input5]);
 
   useEffect(() => {
     const storageData = localStorage.getItem("journalData");
@@ -116,6 +126,7 @@ const Home: NextPage = () => {
     if (journalData.input2) setInput2(journalData.input2);
     if (journalData.input3) setInput3(journalData.input3);
     if (journalData.input4) setInput4(journalData.input4);
+    if (journalData.input5) setInput5(journalData.input5);
     setDate(new Date().toLocaleDateString());
   }, []);
 
@@ -205,7 +216,13 @@ const Home: NextPage = () => {
             input={input4}
             setInput={setInput4}
           />
-          {/* <RadioGroup /> */}
+          <TextArea
+            header={"Gratitude:"}
+            placeholder={"1. I am thankful to XXX for helping in my projects"}
+            input={input5}
+            setInput={setInput5}
+          />
+          <RadioGroup setState={setMood} state={mood} />
           <AiModel
             header={"Select a Ai-model:"}
             journalData={journalData}
