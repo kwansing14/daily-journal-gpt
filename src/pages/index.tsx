@@ -57,10 +57,19 @@ const Home: NextPage = () => {
         id: "callGenerateJournal3",
       }),
   });
+  const callGenerateJournal4 = api.chatGPT.generateJournal4.useMutation({
+    onMutate: () =>
+      toast.loading("Generating...", { id: "callGenerateJournal4" }),
+    onSuccess: () => toast.success("Done!", { id: "callGenerateJournal4" }),
+    onError: (e) =>
+      toast.error(`Error: ${e.data?.code || ""}`, {
+        id: "callGenerateJournal4",
+      }),
+  });
 
   const handleGenerate = (selectedOption: number) => {
     setDataOption(selectedOption);
-    console.log('mood', mood)
+    console.log("mood", mood);
     if (mood === "high") moodInput = "with a tone of excitement";
     if (mood === "low") moodInput = "with a tone of frustration";
     const inputPrompt = `
@@ -92,6 +101,10 @@ const Home: NextPage = () => {
           callGenerateJournal3.mutate({ text: inputPrompt });
         }
         break;
+      case 4:
+        if (input1 && input2 && input3 && input4 && input5) {
+          callGenerateJournal4.mutate({ text: inputPrompt });
+        }
       default:
         break;
     }
@@ -146,12 +159,18 @@ const Home: NextPage = () => {
         callGenerateJournal3.data
       }`;
     }
+    if (callGenerateJournal4.data && dataOption === 4) {
+      return `Date: ${new Date().toLocaleDateString()}\n${
+        callGenerateJournal4.data
+      }`;
+    }
     return "";
   }, [
     dataOption,
     callGenerateJournal.data,
     callGenerateJournal2.data,
     callGenerateJournal3.data,
+    callGenerateJournal4.data,
   ]);
 
   const isLoading = useMemo(() => {
@@ -159,7 +178,8 @@ const Home: NextPage = () => {
     if (
       callGenerateJournal.isLoading ||
       callGenerateJournal2.isLoading ||
-      callGenerateJournal3.isLoading
+      callGenerateJournal3.isLoading ||
+      callGenerateJournal4.isLoading
     ) {
       return true;
     }
@@ -168,9 +188,11 @@ const Home: NextPage = () => {
     callGenerateJournal.isLoading,
     callGenerateJournal2.isLoading,
     callGenerateJournal3.isLoading,
+    callGenerateJournal4.isLoading,
     session,
   ]);
 
+  console.log(callGenerateJournal4.data);
   return (
     <>
       <Head>

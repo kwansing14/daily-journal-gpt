@@ -11,7 +11,7 @@ const AiModel: React.FC<Prop> = ({
   handleGenerate,
   journalData,
   isLoading,
-  header
+  header,
 }) => {
   const copyToClipBoard = async () => {
     if (journalData) {
@@ -28,6 +28,13 @@ const AiModel: React.FC<Prop> = ({
     <>
       <div className="mt-8 text-white">{header}</div>
       <div className="flex items-center gap-4">
+        <button
+          className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
+          onClick={() => handleGenerate(4)}
+          disabled={isLoading}
+        >
+          Turbo
+        </button>
         <button
           className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
           onClick={() => handleGenerate(1)}
@@ -49,6 +56,7 @@ const AiModel: React.FC<Prop> = ({
         >
           Ada
         </button>
+
         {journalData && (
           <button
             className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4"

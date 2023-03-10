@@ -61,4 +61,19 @@ export default createTRPCRouter({
       }
       return "no response";
     }),
+    generateJournal4: protectedProcedure
+    .input(z.object({ text: z.string() }))
+    .mutation(async ({ input }) => {
+      const res = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [
+          {"role": "system", "content": "You are a text-davinci-003 bot but faster"},
+          {"role": "user", "content": `${input.text}`}
+        ]
+      });
+      if (res.data.choices.length > 0) {
+        return res.data.choices[0]?.message?.content;
+      }
+      return "no response";
+    }),
 });
