@@ -27,7 +27,7 @@ const AiModel: React.FC<Prop> = ({
   return (
     <>
       <div className="mt-8 text-white">{header}</div>
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-4">
         <button
           className="min-w-[100px] rounded-sm bg-gray-200 py-1 px-4 outline-none transition-all focus:shadow-gray-100 focus:outline-gray-400 disabled:opacity-25"
           onClick={() => handleGenerate(4)}

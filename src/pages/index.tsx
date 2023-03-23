@@ -28,7 +28,6 @@ const Home: NextPage = () => {
   const [date, setDate] = useState("");
   const [dataOption, setDataOption] = useState(0);
   const { data: session } = useSession();
-  let moodInput: string;
 
   const callGenerateJournal = api.chatGPT.generateJournal.useMutation({
     onMutate: () =>
@@ -69,7 +68,7 @@ const Home: NextPage = () => {
 
   const handleGenerate = (selectedOption: number) => {
     setDataOption(selectedOption);
-    console.log("mood", mood);
+    let moodInput = "";
     if (mood === "high") moodInput = "with a tone of excitement";
     if (mood === "low") moodInput = "with a tone of frustration";
     const inputPrompt = `
@@ -192,7 +191,6 @@ const Home: NextPage = () => {
     session,
   ]);
 
-  console.log(callGenerateJournal4.data);
   return (
     <>
       <Head>

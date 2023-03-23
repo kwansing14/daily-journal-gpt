@@ -8,8 +8,8 @@ interface Prop {
 const RadioGroup: React.FC<Prop> = ({ state, setState }) => {
   const values = ["mehh", "high", "low"];
   useEffect(() => {
-    setState(values[0] || '');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setState(values[0] || "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
@@ -24,6 +24,7 @@ const RadioGroup: React.FC<Prop> = ({ state, setState }) => {
               name="status"
               value={state}
               checked={state === v}
+              readOnly
               onClick={() => setState(v)}
             />
             <label
